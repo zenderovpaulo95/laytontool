@@ -44,6 +44,7 @@ func main() {
 	 var needConvert bool = false
 	 var needReplace bool = false
 	 var charReplace []string
+	 var ch, newCh []rune
 
 	 for c := 0; c < len(args); c++ {
 		if args[c] == "convert" {
@@ -54,6 +55,8 @@ func main() {
 			var err error
 
 			charReplace, err = methods.ReadReplaceChars(args[c + 1])
+			ch = []rune(charReplace[0])
+			newCh = []rune(charReplace[1])
 
 			if err != nil {
 				panic(err)
@@ -64,9 +67,6 @@ func main() {
 
 		var checkStrs = []string{"×", "£"}
 		var replaceStrs = []string{"<multiSign>", "<poundSign>"}
-
-		ch := []rune(charReplace[0])
-		newCh := []rune(charReplace[1])
 
 		for i := 0; i < len(strs); i = i + 2 {
 			if !strings.Contains(strs[i], "tobj/charm.txt") {
@@ -148,5 +148,8 @@ func main() {
     fmt.Println(args[0] + " merge <Путь к папке с файлами из Нотабенойд> - Объединяет текстовые файлы в xlsx файл")
     fmt.Println(args[0] + " maketxt <Путь к файлу xlsx> <Путь к папке для будущих файлов> - Создаёт файлы по xlsx файлу")
     fmt.Println(args[0] + " checkls <Путь к файлу xlsx> - Проверить на наличие длинных фраз в названии локаций")
+    fmt.Println("Также можно перед командами дописать следующие опции:")
+    fmt.Println("replace <Путь к файлу> - для замены символов")
+    fmt.Println("convert - преобразует из Windows-1251 в Windows-1252")
  }
 }
